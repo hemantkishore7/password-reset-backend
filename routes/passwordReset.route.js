@@ -52,8 +52,71 @@ passwordResetRoute.post("/password-reset", async (req, res) => {
 passwordResetRoute.get("/password-reset/:id/:token",async(req,res)=>{
     try {
         const user = await User.findOne({_id:req.params.id})
+        if(!user){
+          return res.status(400).send({
+            message:"INVALID LINK"
+          })
+        }
+        const token = await Token.findOne({
+          userId:user._id,
+          token:req.params.token,
+        })
+        if(!token){
+          return res.status(400).send({
+            message:"INVAKID LINK",
+          })
+        }
+        res.status(200).send("valid url")
+
     } catch (error) {
         console.log(error);
     }
 })
+
+//Reset password
+passwordResetRoute.post("/password-reset/:id/:token",async(req,res)=>{
+  try {
+    const passwordSchema = Joi.object({
+      password : passwordComplexity().required().label("Password")
+    });
+
+    const {error} = passwordSchema.validate(req.body);
+    if(error){
+      return res.status(400).send({
+        message: error.details[0].message
+      })
+    }
+
+    const user = await User.findOne({_id:req.params.id})
+    if(!user){
+      return res.status(400).send({
+        message:"Invalid Link"
+      })
+    }
+
+    const token = await Token.findOne({
+      userId:user._id,
+      token:req.params.token,
+    })
+
+    if(!token){
+      return res.status(400).send({
+        message:"Invalid Link"
+      })
+    }
+
+    const salt = 10;
+    const hashPassword = await bcrypt.hash(req.body.password, salt)
+   
+    user.password = hashPassword;
+    await user.save();
+    await token.deleteOne()
+    res.status(200).send({
+      message:"Password Reset Successfully"
+    })
+  } catch (error) {
+    console.log(error);
+  }
+})
+
 module.exports = passwordResetRoute;

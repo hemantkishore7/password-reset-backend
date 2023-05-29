@@ -25,7 +25,7 @@ authRoute.post("/signin",async(req,res)=>{
         });
     }
 
-    const token = user.generateAuthToken();
+    const token = user.generateAuthToken()
     res.status(200).send({
         data:token,
         message:"sign-in successfull"

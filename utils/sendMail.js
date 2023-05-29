@@ -4,22 +4,27 @@ const smtpTransport = require("nodemailer-smtp-transport")
 module.exports = async(email,subject,text)=>{
     try {
         const transport = nodeMailer.createTransport({
-          service:process.env.SERVICE,
-          port:587,
-          secure:true,
+          service:"gmail",
+          // port:587,
+          // secure:true,
           auth:{
-            user:process.env.USER,
-            pass:process.env.PASS
+            user:"hemantkishore1998@gmail.com",
+            pass:"crttmaipsdpayqqt",
           }
         })
 
-        await transport.sendMail({
-            from:process.env.USER,
-            to:email,
-            subject:subject,
-            text:text,
-        })
-        console.log("Message: Mail sent successfully");
+        transport.sendMail({
+        from:"hemantkishore1998@gmail.com",
+        to: email,
+        subject: subject,
+        text: text,
+      }, (err) => {
+        if (err)
+          console.log("Mail has not sent", err);
+        else
+          console.log("Mail has sent successfully");
+      })
+       //console.log("Message: Mail sent successfully");
     } catch (error) {
         console.log(error);
     }
