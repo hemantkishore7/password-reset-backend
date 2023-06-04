@@ -8,13 +8,13 @@ module.exports = async(email,subject,text)=>{
           // port:587,
           // secure:true,
           auth:{
-            user:"hemantkishore1998@gmail.com",
-            pass:"crttmaipsdpayqqt",
+            user:"hemantkishore98@gmail.com",
+            pass:"wlyowjxsbqsughxi",
           }
         })
 
         transport.sendMail({
-        from:"hemantkishore1998@gmail.com",
+        from:"hemantkishore98@gmail.com",
         to: email,
         subject: subject,
         text: text,
