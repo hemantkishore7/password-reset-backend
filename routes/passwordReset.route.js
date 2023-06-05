@@ -37,7 +37,7 @@ passwordResetRoute.post("/password-reset", async (req, res) => {
       }).save();
     }
 
-    const url = `http://localhost:3000/api/password-reset/${user._id}/${token.token}/`;
+    const url = `https://password-reset-9tmp.onrender.com/api/password-reset/${user._id}/${token.token}/`;
     await sendMail(user.email, "Password Reset", url);
     res.status(200).send({
       message: "Password reset link sent to your email account",
