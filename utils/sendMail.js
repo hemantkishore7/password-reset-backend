@@ -17,7 +17,7 @@ module.exports = async(email,subject,text)=>{
         from:"hemantkishore98@gmail.com",
         to: email,
         subject: subject,
-        text: text,
+        text:"Password reset link :", text,
       }, (err) => {
         if (err)
           console.log("Mail has not sent", err);
