@@ -37,7 +37,7 @@ passwordResetRoute.post("/password-reset", async (req, res) => {
       }).save();
     }
 
-    const url = `https://guileless-meringue-6e035b.netlify.app/reset/${user._id}/${token.token}/`;
+    const url = `https://localhost:3000/reset/${user._id}/${token.token}/`;
     // http://localhost:3000/reset
     await sendMail(user.email, "Password Reset", url);
     res.status(200).send({
